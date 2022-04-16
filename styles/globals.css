@@ -11,6 +11,9 @@
 body {
   background-color: #0a0808;
 }
+::-webkit-scrollbar {
+  display: none;
+}
 @layer components {
   .btn {
     @apply flex w-36 items-center

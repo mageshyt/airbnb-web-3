@@ -3,10 +3,10 @@ import styled from 'styled-components'
 
 //* Icons
 import { FcGlobe } from 'react-icons/fc'
-import { AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai'
-import { BiUserCircle } from 'react-icons/bi'
-import { ConnectButton } from 'web3uikit'
+// import { ConnectButton } from 'web3uikit'
 import SearchBar from './Searchbar'
+import { AiOutlineMenu, AiOutlineSearch, AiOutlineUser } from 'react-icons/ai'
+
 const Header = () => {
   const [colorChange, setColorChange] = useState(false)
   const [scrollY, setScrollY] = useState(0)
@@ -64,14 +64,15 @@ const Header = () => {
         {/* right */}
         <div className="right__side flex  w-[370px] items-center justify-around space-x-2  ">
           {/* Become host container */}
-          <p className=" cursor-pointer text-sm text-white">Become a host </p>
-          <div className="hidden items-center text-gray-100 xl:inline-flex ">
+          <div className="hidden items-center space-x-2 text-gray-100 xl:inline-flex ">
+            <p className=" cursor-pointer text-sm text-white">Become a host </p>
             <FcGlobe className=" h-10 w-10 animate-spin  " />
+            <div className="flex items-center  space-x-2 rounded-full border-2 p-2 ">
+              <AiOutlineMenu className="h-6 w-6 cursor-pointer text-xl" />
+              <AiOutlineUser className="h-6 w-6  cursor-pointer" />
+            </div>
           </div>
           {/* search container */}
-          <div>
-            <ConnectButton />
-          </div>
         </div>
       </header>
       <SearchBar colorChange={colorChange} />
@@ -134,6 +135,6 @@ const Container = styled.div`
   // !search
   .search {
     width: 650px;
-    padding: 15px 0px;
+    padding: 10px 0px;
   }
 `

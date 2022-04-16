@@ -1,18 +1,22 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
 const Banner = () => {
   return (
     <div>
-      <HeroContainer className=" flex items-center justify-center">
-        <div className="heroInner text-white">
-          <div className="inner w-96 mt-5  flex justify-items-start space-y-5 flex-col">
+      <HeroContainer className=" flex items-center justify-center xl:relative">
+        <img
+          src="/images/hero.jpg"
+          className="hidden h-[90vh] w-[100vw] object-cover sm:block"
+        />
+        <div className="heroInner left-[100px]  text-white sm:absolute">
+          <div className="inner mt-5 flex  w-96 flex-col justify-items-start space-y-5">
             {/* Heading */}
-            <h1 className="text-5xl  description font-black">
+            <h1 className="description  text-5xl font-black">
               Olympian & Paralympian Online Experiences
             </h1>
             {/* Button */}
-            <div className="btn-light flex items-center bg-gray-100 w-36 rounded-2xl">
+            <div className="btn-light flex w-36 items-center rounded-2xl bg-gray-100">
               <button href="#" className="btn">
                 Explore Now
               </button>
@@ -21,19 +25,19 @@ const Banner = () => {
         </div>
       </HeroContainer>
     </div>
-  );
-};
+  )
+}
 
-export default Banner;
+export default Banner
 //----------------------------------------------------------------
 
 const HeroContainer = styled.div`
   /* padding: 6rem 3rem; */
   height: 90vh;
   width: 100vw;
-  background: url("./images/hero.jpg") no-repeat;
+  /* background: url("./images/hero.jpg") no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: cover; */
   .heroInner {
     height: 300px;
     width: 90%;
@@ -61,7 +65,7 @@ const HeroContainer = styled.div`
       transform: scale(0.9);
     }
   }
-  @media (max-width: 36rem) {
+  @media (max-width: 38rem) {
     background: url(images/hero-sm.jpg);
     background-position: center, bottom left;
     background-size: cover, cover;
@@ -81,4 +85,4 @@ const HeroContainer = styled.div`
       }
     }
   }
-`;
+`

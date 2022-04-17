@@ -4,6 +4,7 @@ import React from 'react'
 import Header from '../components/Home/Header'
 import Footer from '../components/Home/Footer'
 import InfoCard from '../components/Rentals/InfoCard'
+import RentalsMap from '../components/Rentals/Map'
 
 const rentals = ({ searchResults }) => {
   const router = useRouter()
@@ -13,15 +14,21 @@ const rentals = ({ searchResults }) => {
   const formattedStartDate = format(new Date(), 'dd MMM yy')
   const formattedEndDate = format(new Date(), 'dd MMM yy')
   const range = `${formattedStartDate} - ${formattedEndDate}`
+
+  const cords = []
+  searchResults.forEach((item) => {
+    cords.push({ lat: item?.lat, lng: item?.long })
+  })
+
   return (
-    <div className="h-screen ">
+    <div className="h-full ">
       <Header
         isRetails={true}
         placeholder={`${location} | ${range} | ${noOfGuests} guests`}
       />
       <div className="">
         <main className="flex">
-          <section className="flex-grow px-6 pt-14 text-white">
+          <div className="flex-grow px-6 pt-14 text-white">
             <p className="text-xs font-semibold ">
               300+ Stays - {range} - for - {noOfGuests} number of guests
             </p>
@@ -44,10 +51,10 @@ const rentals = ({ searchResults }) => {
               ))}
               {/* {console.log("-->", searchResults)} */}
             </div>
-          </section>
-          <section className="hidden rounded-xl xl:inline-flex xl:min-w-[600px]">
-            hello
-          </section>
+          </div>
+          <div className="mt-[70px] mb-4 hidden  rounded-2xl bg-[#303030] p-4 xl:inline-flex xl:min-w-[800px]">
+            <RentalsMap cords={cords} />
+          </div>
         </main>
       </div>
 

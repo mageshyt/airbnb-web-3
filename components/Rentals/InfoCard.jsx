@@ -35,7 +35,9 @@ const InfoCard = ({
           {/* Price */}
           <div className="mr-3">
             <p className="pb-2 text-xl font-semibold lg:text-2xl">{price}</p>
-            <p className="text-right font-extralight">{total}</p>
+            <button className="rounded-xl bg-gray-600 p-2 font-medium">
+              Stay Here
+            </button>
           </div>
         </div>
       </div>

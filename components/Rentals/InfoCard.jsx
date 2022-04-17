@@ -4,10 +4,12 @@ import { AiOutlineHeart, AiTwotoneHeart } from 'react-icons/ai'
 import { BsFillStarFill } from 'react-icons/bs'
 const InfoCard = ({
   item: { location, img, title, description, price, star, total },
+  BookRentals,
 }) => {
+  console.log({ location, img, title, description, price, star, total })
   return (
-    <div className="grid-row-2 b mb-4 grid cursor-pointer rounded-2xl  bg-[#202020] py-7 px-2 pr-4 transition duration-200 ease-out hover:opacity-80  hover:shadow-lg md:flex  lg:flex xl:flex">
-      <div className="w-50  relative h-[200px]  flex-shrink-0 md:h-52 md:w-80">
+    <div className="mb-3 flex flex-col items-center space-y-2 rounded-2xl bg-[#202020] p-4 lg:flex-row ">
+      <div className="w-50  relative h-[200px] w-full  flex-shrink-0 md:h-52 md:w-80">
         <Image
           src={img}
           className="rounded-2xl"
@@ -35,7 +37,10 @@ const InfoCard = ({
           {/* Price */}
           <div className="mr-3">
             <p className="pb-2 text-xl font-semibold lg:text-2xl">{price}</p>
-            <button className="rounded-xl bg-gray-600 p-2 font-medium">
+            <button
+              onClick={() => BookRentals}
+              className="rounded-xl bg-gray-600 p-2 font-medium"
+            >
               Stay Here
             </button>
           </div>

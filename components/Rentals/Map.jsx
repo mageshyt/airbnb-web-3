@@ -19,6 +19,7 @@ const RentalsMap = ({ cords, google }) => {
     longitude: center.longitude,
     zoom: 8,
   })
+  console.log({ cords })
   return (
     <div className={style.wrapper}>
       <ReactMapGL

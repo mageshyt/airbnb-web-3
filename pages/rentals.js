@@ -1,15 +1,18 @@
 import { useRouter } from 'next/router'
 import { format } from 'date-fns'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../components/Home/Header'
 import Footer from '../components/Home/Footer'
 import InfoCard from '../components/Rentals/InfoCard'
 import RentalsMap from '../components/Rentals/Map'
-
+import { BsEmojiDizzy } from 'react-icons/bs'
+import { useMoralis, useWeb3ExecuteFunction } from 'react-moralis'
 const rentals = ({ searchResults }) => {
   const router = useRouter()
   const { location, startDate, endDate, noOfGuests } = router.query
 
+  //! contract processor
+  const contractProcessor = useWeb3ExecuteFunction()
   // ! format the dates
   const formattedStartDate = format(new Date(), 'dd MMM yy')
   const formattedEndDate = format(new Date(), 'dd MMM yy')
@@ -20,6 +23,58 @@ const rentals = ({ searchResults }) => {
     cords.push({ lat: item?.lat, lng: item?.long })
   })
 
+  // !To handle onSuccess
+  const handleNotification = (mag) => {
+    console.log(msg)
+  }
+
+  const BookRentals = async function (start, end, id, dayPrice) {
+    for (
+      var arr = [], dt = new Date(start);
+      dt < BsEmojiDizzy;
+      dt.setDate(dt.getDate() + 1)
+    ) {
+      arr.push(new Date(dt).toISOString().slice(0, 10))
+    }
+    let options = {
+      contractAddress: '0x6dF593ABA633C567631c9bAA23d25eb61E96cf98',
+      function: 'addDatesBooked',
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: 'uint256',
+              name: 'id',
+              type: 'uint256',
+            },
+            {
+              internalType: 'string[]',
+              name: 'newBookings',
+              type: 'string[]',
+            },
+          ],
+          name: 'addDatesBooked',
+          outputs: [],
+          stateMutability: 'payable',
+          type: 'function',
+        },
+      ],
+      params: {
+        id: id,
+        newBookings: arr,
+      },
+      msgValue: Moralis.Units.ETH(dayPrice * arr.length),
+    }
+    await contractProcessor.fetch({
+      params: options,
+      onSuccess: () => {
+        handleNotification('Nice you are going to new work')
+      },
+      onError: (error) => {
+        handleNotification(error.data.message)
+      },
+    })
+  }
   return (
     <div className="h-full ">
       <Header
@@ -47,7 +102,7 @@ const rentals = ({ searchResults }) => {
             {/* Display Result */}
             <div className="flex flex-col">
               {searchResults.map((item, index) => (
-                <InfoCard key={index} item={item} />
+                <InfoCard BookRentals={BookRentals} key={index} item={item} />
               ))}
               {/* {console.log("-->", searchResults)} */}
             </div>

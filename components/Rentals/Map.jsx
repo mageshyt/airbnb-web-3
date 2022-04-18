@@ -6,9 +6,8 @@ const style = {
   wrapper: 'bg-[#202020]  h-[99.5%] overflow-hidden w-[100%] rounded-2xl',
 }
 
-const RentalsMap = ({ cords, google }) => {
+const RentalsMap = ({ cords, item }) => {
   const [selectLocation, setSelectLocation] = useState({})
-  console.log({ selectLocation })
   //! getting center
   const center = getCenter(cords)
   //! view state
@@ -19,7 +18,6 @@ const RentalsMap = ({ cords, google }) => {
     longitude: center.longitude,
     zoom: 8,
   })
-  console.log({ cords })
   return (
     <div className={style.wrapper}>
       <ReactMapGL
@@ -29,48 +27,65 @@ const RentalsMap = ({ cords, google }) => {
         onViewportChange={(nextViewport) => setViewport(nextViewport)}
       >
         {/* Markers */}
-        {cords.map((places, index) => {
-          const { lat, lng } = places
-          return (
-            <div key={index}>
-              <Marker
-                offsetLeft={-20}
-                offsetTop={-10}
-                longitude={lng}
-                latitude={lat}
-              >
-                <p
-                  onClick={() => {
-                    setSelectLocation(places)
-                  }}
-                  role="img"
-                  className=" cursor-pointer text-2xl "
-                  aria-label="push-pin"
+        {!!cords &&
+          cords.map((places, index) => {
+            const { lat, lng } = places
+            return (
+              <div key={index}>
+                <Marker
+                  offsetLeft={-20}
+                  offsetTop={-10}
+                  longitude={lng}
+                  latitude={lat}
                 >
-                  🏨
-                </p>
-              </Marker>
-            </div>
-          )
-        })}
+                  <p
+                    onClick={() => {
+                      setSelectLocation(places)
+                      console.log(`selected ${index} 😀`)
+                    }}
+                    role="img"
+                    className=" animate-bounce cursor-pointer text-2xl "
+                    aria-label="push-pin"
+                  >
+                    🏨
+                  </p>
+                </Marker>
+                {/* Popup */}
+                {selectLocation.lat === places.lat && (
+                  <Popup
+                    latitude={lat}
+                    longitude={lng}
+                    closeButton={true}
+                    closeOnClick={false}
+                    dynamicPosition={true}
+                    onClose={() => setSelectLocation({})}
+                    anchor="top"
+                  >
+                    <div className="h-[280px] w-[290px]">
+                      {item.map((item, index) => {
+                        {
+                          if (selectLocation.lat === item.lat) {
+                            return (
+                              <div className=" center flex-col space-y-2">
+                                <span className="text-sm">{item.title}</span>
+                                <img
+                                  src={item.img}
+                                  className="h-[250px] w-[250px] rounded-xl "
+                                />
+                              </div>
+                            )
+                          }
+                        }
+                      })}
+                    </div>
+                  </Popup>
+                )}
+              </div>
+            )
+          })}
       </ReactMapGL>
     </div>
   )
 }
 
 export default RentalsMap
-
-// {
-//   cords.map((position, index) => {
-//     return (
-//       <div key={index}>
-//         <Marker
-//           offsetLeft={-20}
-//           offsetTop={-10}
-//           longitude={long}
-//           latitude={lat}
-//         />
-//       </div>
-//     )
-//   })
-// }

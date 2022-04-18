@@ -22,7 +22,8 @@
     "tailwind-scrollbar-hide": "^1.1.7",
     "react-map-gl": "^6.1.16",
     "geolib": "^3.3.1",
-    "react-reveal": "^1.2.2"
+    "react-reveal": "^1.2.2",
+    "web3uikit": "^0.1.123"
   },
   "devDependencies": {
     "@types/node": "17.0.4",

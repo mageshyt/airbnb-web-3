@@ -1,44 +1,80 @@
 import { useRouter } from 'next/router'
-import { format } from 'date-fns'
-import React, { useEffect } from 'react'
+import { format, set } from 'date-fns'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Home/Header'
 import Footer from '../components/Home/Footer'
+import { useNotification } from 'web3uikit'
 import InfoCard from '../components/Rentals/InfoCard'
 import RentalsMap from '../components/Rentals/Map'
-import { BsEmojiDizzy } from 'react-icons/bs'
-import { useMoralis, useWeb3ExecuteFunction } from 'react-moralis'
+import { useMoralis, useWeb3ExecuteFunction, account } from 'react-moralis'
 const rentals = ({ searchResults }) => {
   const router = useRouter()
+
   const { location, startDate, endDate, noOfGuests } = router.query
 
+  //! moralis
+
+  const { Moralis } = useMoralis()
+
   //! contract processor
+
   const contractProcessor = useWeb3ExecuteFunction()
+  //! notification
+  const dispatch = useNotification()
   // ! format the dates
-  const formattedStartDate = format(new Date(), 'dd MMM yy')
-  const formattedEndDate = format(new Date(), 'dd MMM yy')
+
+  const formattedStartDate = new Date(startDate?.slice(0, 10))
+    .toString()
+    .slice(0, 10)
+
+  const formattedEndDate = new Date(endDate?.slice(0, 10))
+    .toString()
+    .slice(0, 10)
+
   const range = `${formattedStartDate} - ${formattedEndDate}`
 
-  const cords = []
-  searchResults.forEach((item) => {
-    cords.push({ lat: item?.lat, lng: item?.long })
-  })
-
-  // !To handle onSuccess
-  const handleNotification = (mag) => {
+  // !To handle onSuccess transaction
+  const handleSuccess = () => {
+    dispatch({
+      type: 'success',
+      message: `Nice! You are going to ${location}!!`,
+      title: 'Booking Succesful',
+      position: 'topL',
+    })
+    console.log('success')
+  }
+  // !To handle onError transaction
+  const handleError = (msg) => {
+    dispatch({
+      type: 'error',
+      message: `${msg}`,
+      title: 'Booking Failed',
+      position: 'topL',
+    })
     console.log(msg)
   }
 
-  const BookRentals = async function (start, end, id, dayPrice) {
-    for (
-      var arr = [], dt = new Date(start);
-      dt < BsEmojiDizzy;
-      dt.setDate(dt.getDate() + 1)
-    ) {
-      arr.push(new Date(dt).toISOString().slice(0, 10))
-    }
+  const IsAccountExist = () => {
+    dispatch({
+      type: 'error',
+      message: `You need to connect your wallet to book a rental`,
+      title: 'Not Connected',
+      position: 'topL',
+    })
+  }
+
+  const coordinates = []
+  searchResults.forEach((item) => {
+    coordinates.push({ lat: item?.lat, lng: item?.long })
+  })
+
+  //! handle BookRentals
+  const bookRental = async function (start, end, id, dayPrice) {
+    var arr = [start.slice(0, 10)]
+
     let options = {
-      contractAddress: '0x6dF593ABA633C567631c9bAA23d25eb61E96cf98',
-      function: 'addDatesBooked',
+      contractAddress: '0x44Aa635659CD06676f4989102acE6016F9D9A1Fb',
+      functionName: 'addDatesBooked',
       abi: [
         {
           inputs: [
@@ -65,16 +101,22 @@ const rentals = ({ searchResults }) => {
       },
       msgValue: Moralis.Units.ETH(dayPrice * arr.length),
     }
-    await contractProcessor.fetch({
-      params: options,
-      onSuccess: () => {
-        handleNotification('Nice you are going to new work')
-      },
-      onError: (error) => {
-        handleNotification(error.data.message)
-      },
-    })
+    console.log(arr, Moralis.Units.ETH(dayPrice * arr.length), id)
+    if (account) {
+      await contractProcessor.fetch({
+        params: options,
+        onSuccess: () => {
+          handleSuccess()
+        },
+        onError: (error) => {
+          handleError(error?.message)
+        },
+      })
+    } else {
+      IsAccountExist()
+    }
   }
+
   return (
     <div className="h-full ">
       <Header
@@ -102,13 +144,21 @@ const rentals = ({ searchResults }) => {
             {/* Display Result */}
             <div className="flex flex-col">
               {searchResults.map((item, index) => (
-                <InfoCard BookRentals={BookRentals} key={index} item={item} />
+                <InfoCard
+                  startDate={startDate}
+                  endDate={endDate}
+                  BookRentals={bookRental}
+                  key={index}
+                  item={item}
+                  idx={index}
+                  noOfGuests={noOfGuests}
+                />
               ))}
               {/* {console.log("-->", searchResults)} */}
             </div>
           </div>
           <div className="mt-[70px] mb-4 hidden  rounded-2xl bg-[#303030] p-4 xl:inline-flex xl:min-w-[800px]">
-            <RentalsMap cords={cords} />
+            <RentalsMap item={searchResults} cords={coordinates} />
           </div>
         </main>
       </div>

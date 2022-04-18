@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 //* Icons
 import { FcGlobe } from 'react-icons/fc'
-// import { ConnectButton } from 'web3uikit'
+import { ConnectButton } from 'web3uikit'
 import SearchBar from './Searchbar'
 import { AiOutlineMenu, AiOutlineSearch, AiOutlineUser } from 'react-icons/ai'
 import SearchBar2 from './Searchbar2'
@@ -15,6 +15,7 @@ const Header = ({ placeholder, isRetails }) => {
   const [scrollY, setScrollY] = useState(0)
   const router = useRouter()
   const [search, setSearch] = useState('')
+  
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY)
@@ -90,7 +91,9 @@ const Header = ({ placeholder, isRetails }) => {
               </p>
               <FcGlobe className=" h-10 w-10 animate-spin  " />
             </div>
-            <div>{/* <ConnectButton /> */}</div>
+            <div>
+              <ConnectButton />
+            </div>
           </div>
         </div>
       </header>

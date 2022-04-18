@@ -12,7 +12,7 @@ const Banner = () => {
           className="rounded-2xl"
         />
       </div>
-      <div className="banner center absolute top-[90px] left-[20px] flex-col   rounded-xl">
+      <div className="banner center absolute top-[60px] left-[25px] flex-col   rounded-xl">
         <p className="text-xl font-bold text-gray-900 md:text-2xl lg:text-3xl 2xl:text-3xl">
           Not sure where to go ? Perfect
         </p>

@@ -2,6 +2,8 @@ import '../styles/globals.css'
 import { MoralisProvider } from 'react-moralis'
 import ProgressBar from '@badrap/bar-of-progress'
 import Router from 'next/router'
+import { NotificationProvider } from 'web3uikit'
+
 const progress = new ProgressBar({
   size: 4,
   color: '#FE595E',
@@ -17,7 +19,9 @@ function MyApp({ Component, pageProps }) {
       appId={process.env.NEXT_PUBLIC_APP_ID}
       serverUrl={process.env.NEXT_PUBLIC_SERVER_URL}
     >
-      <Component {...pageProps} />
+      <NotificationProvider>
+        <Component {...pageProps} />
+      </NotificationProvider>
     </MoralisProvider>
   )
 }

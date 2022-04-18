@@ -67,7 +67,7 @@ contract airbnb {
         newRental.datesBooked = datesBooked;
         newRental.id = counter;
         newRental.renter = owner;
-        rentalsIds.push(counter);
+        rentalsIds.push(counter); // push the new bookinh 
         emit rentCreated(
                 name, 
                 city, 
@@ -82,7 +82,7 @@ contract airbnb {
                 owner);
         counter++;
     }
-    //! checking booking
+    //! checking booking is a private functuion only used by smart contract
     function checkBookings(uint256 id, string[] memory newBookings) private view returns(bool){
         // loop thorught loops booking array
         for (uint i = 0; i < newBookings.length; i++) {

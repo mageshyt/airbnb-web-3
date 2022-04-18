@@ -2,11 +2,15 @@ import Image from 'next/image'
 import React from 'react'
 import { AiOutlineHeart, AiTwotoneHeart } from 'react-icons/ai'
 import { BsFillStarFill } from 'react-icons/bs'
+import { Button } from 'web3uikit'
 const InfoCard = ({
   item: { location, img, title, description, price, star, total },
   BookRentals,
+  startDate,
+  endDate,
+  idx,
+  noOfGuests,
 }) => {
-  console.log({ location, img, title, description, price, star, total })
   return (
     <div className="mb-3 flex flex-col items-center space-y-2 rounded-2xl bg-[#202020] p-4 lg:flex-row ">
       <div className="w-50  relative h-[200px] w-full  flex-shrink-0 md:h-52 md:w-80">
@@ -37,12 +41,10 @@ const InfoCard = ({
           {/* Price */}
           <div className="mr-3">
             <p className="pb-2 text-xl font-semibold lg:text-2xl">{price}</p>
-            <button
-              onClick={() => BookRentals}
-              className="rounded-xl bg-gray-600 p-2 font-medium"
-            >
-              Stay Here
-            </button>
+            <Button
+              onClick={() => BookRentals(startDate, endDate, idx, noOfGuests)}
+              text="Stay Here"
+            />
           </div>
         </div>
       </div>

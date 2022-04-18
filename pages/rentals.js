@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router'
-import { format, set } from 'date-fns'
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Home/Header'
 import Footer from '../components/Home/Footer'
 import { useNotification } from 'web3uikit'
 import InfoCard from '../components/Rentals/InfoCard'
 import RentalsMap from '../components/Rentals/Map'
-import { useMoralis, useWeb3ExecuteFunction, account } from 'react-moralis'
+import { useMoralis, useWeb3ExecuteFunction } from 'react-moralis'
 const rentals = ({ searchResults }) => {
   const router = useRouter()
 
@@ -14,8 +13,7 @@ const rentals = ({ searchResults }) => {
 
   //! moralis
 
-  const { Moralis } = useMoralis()
-
+  const { Moralis, account } = useMoralis()
   //! contract processor
 
   const contractProcessor = useWeb3ExecuteFunction()
@@ -51,10 +49,10 @@ const rentals = ({ searchResults }) => {
       title: 'Booking Failed',
       position: 'topL',
     })
-    console.log(msg)
   }
 
   const IsAccountExist = () => {
+    console.log(' account exist', account)
     dispatch({
       type: 'error',
       message: `You need to connect your wallet to book a rental`,
@@ -101,7 +99,6 @@ const rentals = ({ searchResults }) => {
       },
       msgValue: Moralis.Units.ETH(dayPrice * arr.length),
     }
-    console.log(arr, Moralis.Units.ETH(dayPrice * arr.length), id)
     if (account) {
       await contractProcessor.fetch({
         params: options,
@@ -109,7 +106,13 @@ const rentals = ({ searchResults }) => {
           handleSuccess()
         },
         onError: (error) => {
-          handleError(error?.message)
+          const msg = error.message.toString().slice(195, 209)
+          console.log(msg)
+          if (msg == 'Already Booked') {
+            handleError(msg)
+          } else {
+            handleError(error)
+          }
         },
       })
     } else {

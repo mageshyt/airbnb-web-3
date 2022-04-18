@@ -4,18 +4,19 @@ import styled from 'styled-components'
 //* Icons
 import { FcGlobe } from 'react-icons/fc'
 import { ConnectButton } from 'web3uikit'
-import SearchBar from './Searchbar'
-import { AiOutlineMenu, AiOutlineSearch, AiOutlineUser } from 'react-icons/ai'
 import SearchBar2 from './Searchbar2'
 import { useRouter } from 'next/router'
 import DatePickerComponent from './DatePicker'
-
+import BookedRentals from '../Rentals/BookedRentals'
 const Header = ({ placeholder, isRetails }) => {
   const [colorChange, setColorChange] = useState(false)
   const [scrollY, setScrollY] = useState(0)
-  const router = useRouter()
+  //! to tack search input
   const [search, setSearch] = useState('')
-  
+  //! to tack visited state
+  const [visible, setVisible] = useState(false)
+  // Router
+  const router = useRouter()
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY)
@@ -89,10 +90,17 @@ const Header = ({ placeholder, isRetails }) => {
               <p className="  cursor-pointer  text-sm text-white">
                 Become a host
               </p>
-              <FcGlobe className=" h-10 w-10 animate-spin  " />
+              <FcGlobe
+                onClick={() => {
+                  setVisible(true)
+                  console.log(visible)
+                }}
+                className=" h-10 w-10 animate-spin cursor-pointer  "
+              />
             </div>
             <div>
               <ConnectButton />
+              <BookedRentals visible={visible} setVisible={setVisible} />
             </div>
           </div>
         </div>

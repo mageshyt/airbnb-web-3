@@ -26,9 +26,8 @@ body {
     @apply flex items-center justify-center;
   }
   .button {
-    @apply transform cursor-pointer rounded-full border border-gray-400 px-4 py-2 shadow-sm transition duration-150 ease-out hover:scale-90 active:scale-75 active:bg-gray-100;
+    @apply transform cursor-pointer truncate text-clip rounded-full border border-gray-400 px-4 py-2 text-xs shadow-sm transition duration-150 ease-out hover:scale-90 active:scale-75 active:bg-gray-100;
   }
-
 }
 .scroll-color {
   background-color: #121212;

@@ -17,6 +17,7 @@ const RentalsMap = ({ cords, item }) => {
     latitude: center.latitude,
     longitude: center.longitude,
     zoom: 8,
+    
   })
   return (
     <div className={style.wrapper}>
@@ -41,7 +42,6 @@ const RentalsMap = ({ cords, item }) => {
                   <p
                     onClick={() => {
                       setSelectLocation(places)
-                      console.log(`selected ${index} 😀`)
                     }}
                     role="img"
                     className=" animate-bounce cursor-pointer text-2xl "

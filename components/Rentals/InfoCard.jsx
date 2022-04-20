@@ -26,7 +26,7 @@ const InfoCard = ({
         {/* location */}
         <div className="flex items-center justify-between ">
           <p className="font-bold text-gray-300">{location}</p>
-          <AiOutlineHeart className="ml-2 text-2xl text-red-500" />
+          <AiOutlineHeart className="ml-2 cursor-pointer text-2xl text-red-500" />
         </div>
         {/* title */}
         <h4 className="text-xl text-white">{title}</h4>

@@ -127,7 +127,7 @@ const rentals = ({ searchResults }) => {
         placeholder={`${location} | ${range} | ${noOfGuests} guests`}
       />
       <div className="">
-        <main className="flex">
+        <main className="flex p-4">
           <div className="flex-grow px-6 pt-14 text-white">
             <p className="text-xs font-semibold ">
               300+ Stays - {range} - for - {noOfGuests} number of guests
@@ -136,7 +136,7 @@ const rentals = ({ searchResults }) => {
               Stays in {location}
             </h1>
 
-            <div className="mb-5  hidden space-x-5 lg:inline-flex">
+            <div className="mb-5  hidden space-x-2 lg:inline-flex xl:space-x-5">
               <button className="button">Cancellation Flexibility</button>
               <button className="button">Type of place</button>
               <button className="button">price</button>
@@ -160,7 +160,7 @@ const rentals = ({ searchResults }) => {
               {/* {console.log("-->", searchResults)} */}
             </div>
           </div>
-          <div className="mt-[70px] mb-4 hidden  rounded-2xl bg-[#303030] p-4 xl:inline-flex xl:min-w-[800px]">
+          <div className="mt-[70px] mb-4 hidden w-[650px] rounded-2xl  bg-[#303030]  p-4 lg:min-w-[550px] xl:flex  2xl:min-w-[700px]">
             <RentalsMap item={searchResults} cords={coordinates} />
           </div>
         </main>

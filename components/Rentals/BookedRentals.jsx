@@ -8,19 +8,20 @@ const BookedRentals = ({ visible, setVisible }) => {
   const [BookedRental, setBookedRental] = useState()
 
   useEffect(() => {
-    const fetchBookedRental = async () => {
-        try{
+
+
+  const fetchBookedRental = async () => {
+      await Moralis.start({ serverUrl: process.env.NEXT_PUBLIC_SERVER_URL, appId: process.env.NEXT_PUBLIC_APP_ID });
 
       const Booked = Moralis?.Object.extend('newBookings') //newBookings is the name of the class in moralis db
       const query = new Moralis?.Query(Booked) //query is the object of the class
       // ! going to get the data from the db to the current user
       query.equalTo('booker', account)
+   
         const results = await query?.find()
-         setBookedRental(results)
-        }
-        catch(err){
-            console.log(err)
-        }
+        setBookedRental(results)
+   
+       
     }
     fetchBookedRental()
   }, [visible])

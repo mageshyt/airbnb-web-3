@@ -60,7 +60,11 @@ const Header = ({ placeholder, isRetails }) => {
         >
           <img
             src="/images/airbnb-2-logo.svg"
-            className="ml-3 h-16 w-16 xl:mb-2"
+            className={
+              colorChange
+                ? 'ml-3  h-16 w-16 xl:mb-2'
+                : 'ml-3  hidden h-16 w-16 md:block xl:mb-2'
+            }
             alt="logo"
           />
         </div>

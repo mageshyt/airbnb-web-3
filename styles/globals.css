@@ -16,19 +16,44 @@ body {
 }
 @layer components {
   .btn {
-    @apply flex w-36 items-center
-            justify-center rounded-2xl 
-             bg-gray-100 p-3
-             font-bold
-             text-gray-700;
+    @apply w-36  rounded-2xl bg-gray-100
+             p-3 text-center
+             font-bold  text-gray-700  transition-all duration-200 ease-in hover:border-[3px] hover:border-[#121212];
+  }
+  .btn-light {
+    @apply select-none  transition-all duration-100 ease-in hover:p-[2.5px] active:scale-[0.9];
   }
   .center {
     @apply flex items-center justify-center;
   }
   .button {
-    @apply transform cursor-pointer truncate text-clip rounded-full border border-gray-400 px-4 py-2 text-xs shadow-sm transition duration-150 ease-out hover:scale-90 active:scale-75 active:bg-gray-100;
+    @apply transform cursor-pointer  text-clip rounded-full border border-gray-400 px-4 py-2 text-xs shadow-sm transition duration-150 ease-out hover:scale-90 active:scale-75 active:bg-gray-100;
   }
+
+
 }
 .scroll-color {
   background-color: #121212;
 }
+
+/* 
+ //button
+  .btn-light {
+    transition: all 0.1s ease-in;
+    :hover {
+      padding: 1.5px 1.5px;
+    }
+    :active {
+      transform: scale(0.9);
+    }
+  }
+  .btn-animate {
+    transition: all 0.1s ease-in;
+    :hover {
+      border: 3px solid #121212;
+    }
+    :active {
+      transform: scale(0.9);
+    }
+  }
+ */

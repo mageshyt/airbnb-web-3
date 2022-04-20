@@ -4,7 +4,7 @@ import { DateRangePicker } from 'react-date-range'
 import 'react-date-range/dist/styles.css' // main style file
 import 'react-date-range/dist/theme/default.css' // theme css file
 import { FaUserAlt } from 'react-icons/fa'
-const DatePickerComponent = ({ search }) => {
+const DatePickerComponent = ({ search, setSearch }) => {
   //* set date on selection
   const [startDate, setStartDate] = useState(new Date())
 

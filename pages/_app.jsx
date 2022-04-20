@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/global.scss'
 import { MoralisProvider } from 'react-moralis'
 import ProgressBar from '@badrap/bar-of-progress'
 import Router from 'next/router'

@@ -75,9 +75,9 @@ const Header = ({ placeholder, isRetails }) => {
         ) : (
           <div className="middle_section center h-[100px] w-full">
             <SearchBar2
+              setSearch={setSearch}
               search={search}
               placeholder={placeholder}
-              setSearch={setSearch}
             />
           </div>
         )}
@@ -93,7 +93,6 @@ const Header = ({ placeholder, isRetails }) => {
               <FcGlobe
                 onClick={() => {
                   setVisible(true)
-                  console.log(visible)
                 }}
                 className=" h-10 w-10 animate-spin cursor-pointer  "
               />
@@ -113,8 +112,8 @@ const Header = ({ placeholder, isRetails }) => {
         />
       )}
       {search.length > 1 && (
-        <div className="z-20 col-span-3 mx-auto mt-2 flex h-10 flex-col rounded-xl  ">
-          <DatePickerComponent search={search} />
+        <div className=" col-span-3 mx-auto mt-2 flex h-10 flex-col rounded-xl  ">
+          <DatePickerComponent setSearch={setSearch} search={search} />
         </div>
       )}
     </Container>
